@@ -2,7 +2,7 @@ version: "3.5"
 
 services:
   webserver:
-    image: vjcspy/ebs-docker-php-nginx:7.1
+    build: ./bin/webserver
     container_name: "${STACK_NAME}-web"
     domainname: "${STACK_NAME}-web"
     hostname: "${STACK_NAME}-web"
@@ -12,7 +12,7 @@ services:
     networks:
       - ebs-docker-network
     #    volumes:
-    #      - ./src:/var/www/mgt
+    #      - ./src/mgt:/var/www/mgt
     #      - ./config/nginx/conf.d/mgt.conf:/opt/docker/etc/nginx/conf.d/mgt.conf
     #      - ./config/nginx/custom-vhost:/opt/docker/etc/nginx/custom-vhost
     #      - ./config/key:/var/key
@@ -25,7 +25,7 @@ services:
 #    domainname: "${STACK_NAME}-db"
 #    hostname: "${STACK_NAME}-db"
 #    ports:
-#      - "${HOST_MACHINE_MYSQL_PORT}:3306"
+#      - "3306:3306"
 #    networks:
 #      - ebs-docker-network
 #    volumes:
@@ -60,7 +60,7 @@ services:
 #    # command: redis-server --appendonly yes --requirepass root
 #    command: ["redis-server", "--appendonly", "yes"]
 #    ports:
-#      - "${HOST_MACHINE_REDIS_PORT}:6379"
+#      - "6379:6379"
 #    networks:
 #      - ebs-docker-network
 #    env_file: .env

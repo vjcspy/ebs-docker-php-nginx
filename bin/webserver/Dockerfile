@@ -65,3 +65,6 @@ COPY ./php/php.ini /opt/docker/etc/php/php.ini
 COPY ./nginx/conf.d/11-php.conf /opt/docker/etc/nginx/conf.d/11-php.conf
 RUN chmod 644 /opt/docker/etc/nginx/conf.d/11-php.conf
 
+## -----------------------------ADD helper-----------------------------
+ADD ./bin/setup-mgt.sh /usr/local/bin/setup-mgt.sh
+RUN chmod 755 /usr/local/bin/setup-mgt.sh
