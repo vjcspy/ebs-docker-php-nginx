@@ -1,0 +1,69 @@
+version: "3.5"
+
+services:
+  webserver:
+    image: vjcspy/ebs-docker-php-nginx:7.1
+    container_name: "${STACK_NAME}-web"
+    domainname: "${STACK_NAME}-web"
+    hostname: "${STACK_NAME}-web"
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - ebs-docker-network
+    #    volumes:
+    #      - ./src:/var/www/mgt
+    #      - ./config/nginx/conf.d/mgt.conf:/opt/docker/etc/nginx/conf.d/mgt.conf
+    #      - ./config/nginx/custom-vhost:/opt/docker/etc/nginx/custom-vhost
+    #      - ./config/key:/var/key
+    env_file: .env
+    environment:
+      PHP_IDE_CONFIG: "serverName=mgt" #debug cli
+#  mysql:
+#    build: ./bin/mysql
+#    container_name: "${STACK_NAME}-db"
+#    domainname: "${STACK_NAME}-db"
+#    hostname: "${STACK_NAME}-db"
+#    ports:
+#      - "${HOST_MACHINE_MYSQL_PORT}:3306"
+#    networks:
+#      - ebs-docker-network
+#    volumes:
+#      - ./docker_data/mysql:/var/lib/mysql
+#      - ./docker_data/logs/mysql:/var/log/mysql
+#    environment:
+#      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+#      MYSQL_DATABASE: ${MYSQL_DATABASE}
+#      MYSQL_USER: ${MYSQL_USER}
+#      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+#    env_file: .env
+#  rabbit:
+#    networks:
+#      - ebs-docker-network
+#    hostname: "${STACK_NAME}-rb"
+#    container_name: "${STACK_NAME}-rb"
+#    domainname: "${STACK_NAME}-rb"
+#    image: "rabbitmq:3-management"
+#    ports:
+#      - "15672:15672"
+#      - "5672:5672"
+#    environment:
+#      RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
+#      RABBITMQ_DEFAULT_USER: "rabbitmq"
+#      RABBITMQ_DEFAULT_PASS: "rabbitmq"
+#      RABBITMQ_DEFAULT_VHOST: "/"
+#  redis:
+#    container_name: "${STACK_NAME}-rds"
+#    domainname: "${STACK_NAME}-rds"
+#    hostname: "${STACK_NAME}-rds"
+#    image: redis:latest
+#    # command: redis-server --appendonly yes --requirepass root
+#    command: ["redis-server", "--appendonly", "yes"]
+#    ports:
+#      - "${HOST_MACHINE_REDIS_PORT}:6379"
+#    networks:
+#      - ebs-docker-network
+#    env_file: .env
+networks:
+  ebs-docker-network:
+

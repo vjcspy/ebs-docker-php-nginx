@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+# m h dom mon dow command
+* * * * * echo "Hello world" >> /var/log/cron.log 2>&1
+# An empty line is required at the end of this file for a valid cron file.

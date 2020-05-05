@@ -1,0 +1,6 @@
+/.vscode
+/.idea
+/docker_data/*
+/logs/*
+/www/**
+.DS_Store
