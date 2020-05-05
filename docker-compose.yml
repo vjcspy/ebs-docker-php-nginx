@@ -19,23 +19,23 @@ services:
     env_file: .env
     environment:
       PHP_IDE_CONFIG: "serverName=mgt" #debug cli
-      MAGENTO_ADMIN_URI:admin
-      MAGENTO_DB_HOST:a
-      MAGENTO_DB_NAME:vngdev
-      MAGENTO_DB_USER:admin
-      MAGENTO_DB_PASSWORD:a
-      MAGENTO_INSTALL_BASE_URL:http://vng.ggg.systems
-      MAGENTO_INSTALL_BASE_SECURE_URL:https://vng.ggg.systems
-      MAGENTO_INSTALL_USE_SECURE:1
-      MAGENTO_INSTALL_USE_SECURE_ADMIN:1
-      MAGENTO_INSTALL_LANGUAGE:en_US
-      MAGENTO_INSTALL_TIMEZONE:Asia/Ho_Chi_Minh
-      MAGENTO_INSTALL_CURRENCY:VND
-      MAGENTO_INSTALL_ADMIN_FIRSTNAME:khoi
-      MAGENTO_INSTALL_ADMIN_LASTNAME:le
-      MAGENTO_INSTALL_ADMIN_EMAIL:mr.vjcspy@gmail.com
-      MAGENTO_INSTALL_ADMIN_USERNAME:khoile
-      MAGENTO_INSTALL_ADMIN_PASSWORD:admin123
+      MAGENTO_ADMIN_URI: admin
+      MAGENTO_DB_HOST: a
+      MAGENTO_DB_NAME: vngdev
+      MAGENTO_DB_USER: admin
+      MAGENTO_DB_PASSWORD: a
+      MAGENTO_INSTALL_BASE_URL: "http://vng.ggg.systems"
+      MAGENTO_INSTALL_BASE_SECURE_URL: "https://vng.ggg.systems"
+      MAGENTO_INSTALL_USE_SECURE: 1
+      MAGENTO_INSTALL_USE_SECURE_ADMIN: 1
+      MAGENTO_INSTALL_LANGUAGE: en_US
+      MAGENTO_INSTALL_TIMEZONE: Asia/Ho_Chi_Minh
+      MAGENTO_INSTALL_CURRENCY: VND
+      MAGENTO_INSTALL_ADMIN_FIRSTNAME: khoi
+      MAGENTO_INSTALL_ADMIN_LASTNAME: le
+      MAGENTO_INSTALL_ADMIN_EMAIL: mr.vjcspy@gmail.com
+      MAGENTO_INSTALL_ADMIN_USERNAME: khoile
+      MAGENTO_INSTALL_ADMIN_PASSWORD: admin123
   #  mysql:
   #    build: ./bin/mysql
   #    container_name: "${STACK_NAME}-db"
