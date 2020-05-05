@@ -62,7 +62,7 @@ COPY ./html /app
 COPY ./php/php.ini /opt/docker/etc/php/php.ini
 
 ## Setup php-fpm
-COPY ./nginx/conf.d/11-php.conf /opt/docker/etc/nginx/conf.d/11-php.conf
+COPY ./nginx/conf.d /opt/docker/etc/nginx/conf.d
 RUN chmod 644 /opt/docker/etc/nginx/conf.d/11-php.conf
 
 ## -----------------------------ADD helper-----------------------------
