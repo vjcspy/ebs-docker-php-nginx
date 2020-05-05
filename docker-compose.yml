@@ -11,10 +11,9 @@ services:
       - "443:443"
     networks:
       - ebs-docker-network
-    #    volumes:
-    #      - ./src/mgt:/var/www/mgt
-    #      - ./config/nginx/conf.d/mgt.conf:/opt/docker/etc/nginx/conf.d/mgt.conf
-    #      - ./config/nginx/custom-vhost:/opt/docker/etc/nginx/custom-vhost
+    volumes:
+      - ./src:/app
+      - ./config/nginx/vhost.common.d:/opt/docker/etc/nginx/vhost.common.d
     #      - ./config/key:/var/key
     env_file: .env
     environment:
