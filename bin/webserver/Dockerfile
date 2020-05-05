@@ -63,7 +63,9 @@ COPY ./php/php.ini /opt/docker/etc/php/php.ini
 
 ## Setup php-fpm
 COPY ./nginx/conf.d /opt/docker/etc/nginx/conf.d
+COPY ./nginx/vhost.conf /opt/docker/etc/nginx/vhost.conf
 RUN chmod 644 /opt/docker/etc/nginx/conf.d/11-php.conf
+RUN chmod 644 /opt/docker/etc/nginx/vhost.conf
 
 ## -----------------------------ADD helper-----------------------------
 ADD ./bin/setup-mgt.sh /usr/local/bin/setup-mgt.sh

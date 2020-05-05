@@ -12,45 +12,46 @@ services:
     networks:
       - ebs-docker-network
     volumes:
-      - ./src:/app
+      - /home/vjcspy/work/vinagiay/src/web:/app
       - ./config/nginx/vhost.common.d:/opt/docker/etc/nginx/vhost.common.d
+    #      - ./config/key/vhost.ssl.conf:/opt/docker/etc/nginx/vhost.ssl.conf
     #      - ./config/key:/var/key
     env_file: .env
     environment:
       PHP_IDE_CONFIG: "serverName=mgt" #debug cli
-#  mysql:
-#    build: ./bin/mysql
-#    container_name: "${STACK_NAME}-db"
-#    domainname: "${STACK_NAME}-db"
-#    hostname: "${STACK_NAME}-db"
-#    ports:
-#      - "3306:3306"
-#    networks:
-#      - ebs-docker-network
-#    volumes:
-#      - ./docker_data/mysql:/var/lib/mysql
-#      - ./docker_data/logs/mysql:/var/log/mysql
-#    environment:
-#      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-#      MYSQL_DATABASE: ${MYSQL_DATABASE}
-#      MYSQL_USER: ${MYSQL_USER}
-#      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-#    env_file: .env
-#  rabbit:
-#    networks:
-#      - ebs-docker-network
-#    hostname: "${STACK_NAME}-rb"
-#    container_name: "${STACK_NAME}-rb"
-#    domainname: "${STACK_NAME}-rb"
-#    image: "rabbitmq:3-management"
-#    ports:
-#      - "15672:15672"
-#      - "5672:5672"
-#    environment:
-#      RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
-#      RABBITMQ_DEFAULT_USER: "rabbitmq"
-#      RABBITMQ_DEFAULT_PASS: "rabbitmq"
-#      RABBITMQ_DEFAULT_VHOST: "/"
+  #  mysql:
+  #    build: ./bin/mysql
+  #    container_name: "${STACK_NAME}-db"
+  #    domainname: "${STACK_NAME}-db"
+  #    hostname: "${STACK_NAME}-db"
+  #    ports:
+  #      - "3306:3306"
+  #    networks:
+  #      - ebs-docker-network
+  #    volumes:
+  #      - ./docker_data/mysql:/var/lib/mysql
+  #      - ./docker_data/logs/mysql:/var/log/mysql
+  #    environment:
+  #      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+  #      MYSQL_DATABASE: ${MYSQL_DATABASE}
+  #      MYSQL_USER: ${MYSQL_USER}
+  #      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+  #    env_file: .env
+  #  rabbit:
+  #    networks:
+  #      - ebs-docker-network
+  #    hostname: "${STACK_NAME}-rb"
+  #    container_name: "${STACK_NAME}-rb"
+  #    domainname: "${STACK_NAME}-rb"
+  #    image: "rabbitmq:3-management"
+  #    ports:
+  #      - "15672:15672"
+  #      - "5672:5672"
+  #    environment:
+  #      RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
+  #      RABBITMQ_DEFAULT_USER: "rabbitmq"
+  #      RABBITMQ_DEFAULT_PASS: "rabbitmq"
+  #      RABBITMQ_DEFAULT_VHOST: "/"
   redis:
     container_name: "${STACK_NAME}-rds"
     domainname: "${STACK_NAME}-rds"
