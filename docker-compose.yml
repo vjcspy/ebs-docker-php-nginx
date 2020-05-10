@@ -14,8 +14,8 @@ services:
     volumes:
       - /home/vjcspy/work/vinagiay/src/web:/app
       - ./config/nginx/vhost.common.d:/opt/docker/etc/nginx/vhost.common.d
-    #      - ./config/key/vhost.ssl.conf:/opt/docker/etc/nginx/vhost.ssl.conf
-    #      - ./config/key:/var/key
+      - ./config/key/vhost.ssl.conf:/opt/docker/etc/nginx/vhost.ssl.conf
+      - ./config/key:/var/key
     env_file: .env
     environment:
       PHP_IDE_CONFIG: "serverName=mgt" #debug cli
@@ -36,24 +36,24 @@ services:
       MAGENTO_INSTALL_ADMIN_EMAIL: mr.vjcspy@gmail.com
       MAGENTO_INSTALL_ADMIN_USERNAME: khoile
       MAGENTO_INSTALL_ADMIN_PASSWORD: admin123
-  #  mysql:
-  #    build: ./bin/mysql
-  #    container_name: "${STACK_NAME}-db"
-  #    domainname: "${STACK_NAME}-db"
-  #    hostname: "${STACK_NAME}-db"
-  #    ports:
-  #      - "3306:3306"
-  #    networks:
-  #      - ebs-docker-network
-  #    volumes:
-  #      - ./docker_data/mysql:/var/lib/mysql
-  #      - ./docker_data/logs/mysql:/var/log/mysql
-  #    environment:
-  #      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-  #      MYSQL_DATABASE: ${MYSQL_DATABASE}
-  #      MYSQL_USER: ${MYSQL_USER}
-  #      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-  #    env_file: .env
+  mysql:
+    image: mysql:5.7
+    container_name: "${STACK_NAME}-db"
+    domainname: "${STACK_NAME}-db"
+    hostname: "${STACK_NAME}-db"
+    ports:
+      - "3306:3306"
+    networks:
+      - ebs-docker-network
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+      - ./logs/mysql:/var/log/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    env_file: .env
   #  rabbit:
   #    networks:
   #      - ebs-docker-network
