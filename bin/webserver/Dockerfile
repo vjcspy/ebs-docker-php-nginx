@@ -69,4 +69,6 @@ RUN chmod 644 /opt/docker/etc/nginx/vhost.conf
 
 ## -----------------------------ADD helper-----------------------------
 ADD ./bin/setup-mgt.sh /usr/local/bin/setup-mgt.sh
+ADD ./bin/debug.sh /usr/local/bin/debug.sh
 RUN chmod 755 /usr/local/bin/setup-mgt.sh
+RUN chmod 755 /usr/local/bin/debug.sh
