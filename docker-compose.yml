@@ -13,12 +13,14 @@ services:
       - ebs-docker-network
     volumes:
       - nfsmount:/app:cached
+      - ./docker_data/logs/nginx/error.log:/var/log/nginx/error_log
       - ./config/nginx/vhost.common.d:/opt/docker/etc/nginx/vhost.common.d
       - ./config/key/vhost.ssl.conf:/opt/docker/etc/nginx/vhost.ssl.conf
       - ./config/key:/var/key
     env_file: .env
     environment:
       PHP_IDE_CONFIG: "serverName=mgt" #debug cli
+      XDEBUG_REMOTE_HOST: "docker.for.mac.localhost"
       MAGENTO_ADMIN_URI: admin
       MAGENTO_DB_HOST: a
       MAGENTO_DB_NAME: vngdev
