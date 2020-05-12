@@ -1,86 +1,94 @@
 version: "3.5"
 
 services:
-  webserver:
-    image: vjcspy/ebs-docker-php-nginx:7.1
-    container_name: "${STACK_NAME}-web"
-    domainname: "${STACK_NAME}-web"
-    hostname: "${STACK_NAME}-web"
-    ports:
-      - "80:80"
-      - "443:443"
-    networks:
-      - ebs-docker-network
-    volumes:
-      - /home/vjcspy/work/vinagiay/src/web:/app
-      - ./config/nginx/vhost.common.d:/opt/docker/etc/nginx/vhost.common.d
-    #      - ./config/key/vhost.ssl.conf:/opt/docker/etc/nginx/vhost.ssl.conf
-    #      - ./config/key:/var/key
-    env_file: .env
-    environment:
-      PHP_IDE_CONFIG: "serverName=mgt" #debug cli
-      MAGENTO_ADMIN_URI: admin
-      MAGENTO_DB_HOST: a
-      MAGENTO_DB_NAME: vngdev
-      MAGENTO_DB_USER: admin
-      MAGENTO_DB_PASSWORD: a
-      MAGENTO_INSTALL_BASE_URL: "http://vng.ggg.systems"
-      MAGENTO_INSTALL_BASE_SECURE_URL: "https://vng.ggg.systems"
-      MAGENTO_INSTALL_USE_SECURE: 1
-      MAGENTO_INSTALL_USE_SECURE_ADMIN: 1
-      MAGENTO_INSTALL_LANGUAGE: en_US
-      MAGENTO_INSTALL_TIMEZONE: Asia/Ho_Chi_Minh
-      MAGENTO_INSTALL_CURRENCY: VND
-      MAGENTO_INSTALL_ADMIN_FIRSTNAME: khoi
-      MAGENTO_INSTALL_ADMIN_LASTNAME: le
-      MAGENTO_INSTALL_ADMIN_EMAIL: mr.vjcspy@gmail.com
-      MAGENTO_INSTALL_ADMIN_USERNAME: khoile
-      MAGENTO_INSTALL_ADMIN_PASSWORD: admin123
-  #  mysql:
-  #    build: ./bin/mysql
-  #    container_name: "${STACK_NAME}-db"
-  #    domainname: "${STACK_NAME}-db"
-  #    hostname: "${STACK_NAME}-db"
-  #    ports:
-  #      - "3306:3306"
-  #    networks:
-  #      - ebs-docker-network
-  #    volumes:
-  #      - ./docker_data/mysql:/var/lib/mysql
-  #      - ./docker_data/logs/mysql:/var/log/mysql
-  #    environment:
-  #      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-  #      MYSQL_DATABASE: ${MYSQL_DATABASE}
-  #      MYSQL_USER: ${MYSQL_USER}
-  #      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-  #    env_file: .env
-  #  rabbit:
-  #    networks:
-  #      - ebs-docker-network
-  #    hostname: "${STACK_NAME}-rb"
-  #    container_name: "${STACK_NAME}-rb"
-  #    domainname: "${STACK_NAME}-rb"
-  #    image: "rabbitmq:3-management"
-  #    ports:
-  #      - "15672:15672"
-  #      - "5672:5672"
-  #    environment:
-  #      RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
-  #      RABBITMQ_DEFAULT_USER: "rabbitmq"
-  #      RABBITMQ_DEFAULT_PASS: "rabbitmq"
-  #      RABBITMQ_DEFAULT_VHOST: "/"
-  redis:
-    container_name: "${STACK_NAME}-rds"
-    domainname: "${STACK_NAME}-rds"
-    hostname: "${STACK_NAME}-rds"
-    image: redis:latest
-    # command: redis-server --appendonly yes --requirepass root
-    command: ["redis-server", "--appendonly", "yes"]
-    ports:
-      - "6379:6379"
-    networks:
-      - ebs-docker-network
-    env_file: .env
+    webserver:
+        image: vjcspy/ebs-docker-php-nginx:7.1
+        container_name: "${STACK_NAME}-web"
+        domainname: "${STACK_NAME}-web"
+        hostname: "${STACK_NAME}-web"
+        ports:
+            - "80:80"
+            - "443:443"
+        networks:
+            - ebs-docker-network
+        volumes:
+            - nfsmount:/app:cached
+            - ./config/nginx/vhost.common.d:/opt/docker/etc/nginx/vhost.common.d
+        #      - ./config/key/vhost.ssl.conf:/opt/docker/etc/nginx/vhost.ssl.conf
+        #      - ./config/key:/var/key
+        env_file: .env
+        environment:
+            PHP_IDE_CONFIG: "serverName=mgt" #debug cli
+            MAGENTO_ADMIN_URI: admin
+            MAGENTO_DB_HOST: a
+            MAGENTO_DB_NAME: vngdev
+            MAGENTO_DB_USER: admin
+            MAGENTO_DB_PASSWORD: a
+            MAGENTO_INSTALL_BASE_URL: "http://vng.ggg.systems"
+            MAGENTO_INSTALL_BASE_SECURE_URL: "https://vng.ggg.systems"
+            MAGENTO_INSTALL_USE_SECURE: 1
+            MAGENTO_INSTALL_USE_SECURE_ADMIN: 1
+            MAGENTO_INSTALL_LANGUAGE: en_US
+            MAGENTO_INSTALL_TIMEZONE: Asia/Ho_Chi_Minh
+            MAGENTO_INSTALL_CURRENCY: VND
+            MAGENTO_INSTALL_ADMIN_FIRSTNAME: khoi
+            MAGENTO_INSTALL_ADMIN_LASTNAME: le
+            MAGENTO_INSTALL_ADMIN_EMAIL: mr.vjcspy@gmail.com
+            MAGENTO_INSTALL_ADMIN_USERNAME: khoile
+            MAGENTO_INSTALL_ADMIN_PASSWORD: admin123
+    mysql:
+        image: mysql:5.7
+        container_name: "${STACK_NAME}-db"
+        domainname: "${STACK_NAME}-db"
+        hostname: "${STACK_NAME}-db"
+        ports:
+            - "3306:3306"
+        networks:
+            - ebs-docker-network
+        volumes:
+            - ./docker_data/mysql:/var/lib/mysql
+            - ./docker_data/logs/mysql:/var/log/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+        env_file: .env
+    #  rabbit:
+    #    networks:
+    #      - ebs-docker-network
+    #    hostname: "${STACK_NAME}-rb"
+    #    container_name: "${STACK_NAME}-rb"
+    #    domainname: "${STACK_NAME}-rb"
+    #    image: "rabbitmq:3-management"
+    #    ports:
+    #      - "15672:15672"
+    #      - "5672:5672"
+    #    environment:
+    #      RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
+    #      RABBITMQ_DEFAULT_USER: "rabbitmq"
+    #      RABBITMQ_DEFAULT_PASS: "rabbitmq"
+    #      RABBITMQ_DEFAULT_VHOST: "/"
+#    redis:
+#        container_name: "${STACK_NAME}-rds"
+#        domainname: "${STACK_NAME}-rds"
+#        hostname: "${STACK_NAME}-rds"
+#        image: redis:latest
+#        # command: redis-server --appendonly yes --requirepass root
+#        command: ["redis-server", "--appendonly", "yes"]
+#        ports:
+#            - "6379:6379"
+#        networks:
+#            - ebs-docker-network
+#        env_file: .env
 networks:
-  ebs-docker-network:
+    ebs-docker-network:
+
+volumes:
+    nfsmount:
+        driver: local
+        driver_opts:
+            type: nfs
+            o: addr=host.docker.internal,rw,nolock,hard,nointr,nfsvers=3
+            device: ":${SOURCE_DIR}"
 
