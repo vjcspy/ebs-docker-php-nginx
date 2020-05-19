@@ -61,8 +61,13 @@ COPY ./html /app
 ## -----------------------------config PHP/Nginx-----------------------------
 COPY ./php/php.ini /opt/docker/etc/php/php.ini
 
-## Setup php-fpm
+## add more php-fpm config
 COPY ./nginx/conf.d /opt/docker/etc/nginx/conf.d
+## add ssl pem by using mkcert
+COPY ./nginx/ssl /opt/docker/etc/nginx/ssl
+## add custom site config
+COPY ./nginx/vhost.d /opt/docker/etc/nginx/vhost.d
+## vhost config for nginx
 COPY ./nginx/vhost.conf /opt/docker/etc/nginx/vhost.conf
 RUN chmod 644 /opt/docker/etc/nginx/conf.d/11-php.conf
 RUN chmod 644 /opt/docker/etc/nginx/vhost.conf
