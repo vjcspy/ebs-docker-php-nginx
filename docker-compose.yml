@@ -12,12 +12,12 @@ services:
     networks:
       - ebs-docker-network
     volumes:
-      - MAGENTO_FOLDER:/app
-    #      - ./config/nginx/vhost.conf:/opt/docker/etc/nginx/vhost.conf
+      - nfsmount:/app
+      - ./config/nginx/vhost.conf:/opt/docker/etc/nginx/vhost.conf
     env_file: .env
     environment:
       PHP_IDE_CONFIG: "serverName=mgt" #debug cli
-      #      XDEBUG_REMOTE_HOST: "host.docker.internal" #ubuntu
+      #      XDEBUG_REMOTE_HOST: "host.docker.internal" #linux
       XDEBUG_REMOTE_HOST: "docker.for.mac.localhost" #mac
   mysql:
     image: mysql:5.7
@@ -37,34 +37,13 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     env_file: .env
-  #  rabbit:
-  #    networks:
-  #      - ebs-docker-network
-  #    hostname: "${STACK_NAME}-rb"
-  #    container_name: "${STACK_NAME}-rb"
-  #    domainname: "${STACK_NAME}-rb"
-  #    image: "rabbitmq:3-management"
-  #    ports:
-  #      - "15672:15672"
-  #      - "5672:5672"
-  #    environment:
-  #      RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
-  #      RABBITMQ_DEFAULT_USER: "rabbitmq"
-  #      RABBITMQ_DEFAULT_PASS: "rabbitmq"
-  #      RABBITMQ_DEFAULT_VHOST: "/"
-#    redis:
-#        container_name: "${STACK_NAME}-rds"
-#        domainname: "${STACK_NAME}-rds"
-#        hostname: "${STACK_NAME}-rds"
-#        image: redis:latest
-#        # command: redis-server --appendonly yes --requirepass root
-#        command: ["redis-server", "--appendonly", "yes"]
-#        ports:
-#            - "6379:6379"
-#        networks:
-#            - ebs-docker-network
-#        env_file: .env
 networks:
   ebs-docker-network:
 
-
+volumes:
+  nfsmount:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=host.docker.internal,rw,nolock,hard,nointr,nfsvers=3
+      device: ":${SOURCE_DIR}"
