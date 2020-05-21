@@ -2,7 +2,7 @@ version: "3.5"
 
 services:
   webserver:
-    image: vjcspy/ebs-docker-php-nginx:7.3
+    image: vjcspy/ebs-docker-php-nginx:7.3-prod
     container_name: "${STACK_NAME}-web"
     domainname: "${STACK_NAME}-web"
     hostname: "${STACK_NAME}-web"
@@ -12,7 +12,7 @@ services:
     networks:
       - ebs-docker-network
     volumes:
-      - nfsmount:/app
+      - MAGENTO_FOLDER:/app
       - ./config/nginx/vhost.conf:/opt/docker/etc/nginx/vhost.conf
     env_file: .env
     environment:
@@ -40,11 +40,3 @@ services:
     env_file: .env
 networks:
   ebs-docker-network:
-
-volumes:
-  nfsmount:
-    driver: local
-    driver_opts:
-      type: nfs
-      o: addr=host.docker.internal,rw,nolock,hard,nointr,nfsvers=3
-      device: ":${SOURCE_DIR}"

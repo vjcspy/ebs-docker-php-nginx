@@ -1,4 +1,4 @@
-FROM webdevops/php-nginx-dev:7.3
+FROM webdevops/php-nginx:7.3
 
 RUN apt-get update
 RUN apt-get -y upgrade
