@@ -12,7 +12,7 @@ services:
     networks:
       - ebs-docker-network
     volumes:
-      - MAGENTO_FOLDER:/app
+      - nfsmount:/app
       - ./config/nginx/vhost.conf:/opt/docker/etc/nginx/vhost.conf
     env_file: .env
     environment:
@@ -40,3 +40,11 @@ services:
     env_file: .env
 networks:
   ebs-docker-network:
+
+volumes:
+  nfsmount:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=host.docker.internal,rw,nolock,hard,nointr,nfsvers=3
+      device: ":${SOURCE_DIR}"
