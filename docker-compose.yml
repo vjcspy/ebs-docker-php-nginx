@@ -12,7 +12,7 @@ services:
     networks:
       - ebs-docker-network
     volumes:
-      - MAGENTO_FOLDER:/app
+      - /home/vjcspy/work/ggg/bom:/app
       - ./config/nginx/vhost.conf:/opt/docker/etc/nginx/vhost.conf
     env_file: .env
     environment:
