@@ -13,7 +13,7 @@ services:
       - ebs-docker-network
     volumes:
       - MAGENTO_FOLDER:/app
-    #      - ./config/nginx/vhost.conf:/opt/docker/etc/nginx/vhost.conf
+      - ./config/nginx/vhost.conf:/opt/docker/etc/nginx/vhost.conf
     env_file: .env
     environment:
       PHP_IDE_CONFIG: "serverName=mgt" #debug cli
