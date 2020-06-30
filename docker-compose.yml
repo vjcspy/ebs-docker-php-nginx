@@ -13,9 +13,7 @@ services:
       - ebs-docker-network
     volumes:
       - /home/vjcspy/work/ggg/bom:/app/yt
-      - /home/vjcspy/work/vinagiay/src/web:/app/vng
-      - /home/vjcspy/work/vinagiay/src/vng_current:/app/vng_current
-      - /home/vjcspy/work/vinagiay/src/vng_ee:/app/vng_ee
+      - /home/vjcspy/work/wp_yt/yutang/public_html:/app/yt_wp
       - ./config/nginx/vhost.conf:/opt/docker/etc/nginx/vhost.conf
     env_file: .env
     environment:
