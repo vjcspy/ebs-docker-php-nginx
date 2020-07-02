@@ -14,6 +14,7 @@ services:
     volumes:
       - /home/vjcspy/work/ggg/bom:/app/yt
       - /home/vjcspy/work/wp_yt/yutang/public_html:/app/yt_wp
+      - /home/vjcspy/work/vinagiay/src/vng_current:/app/vng_current
       - ./config/nginx/vhost.conf:/opt/docker/etc/nginx/vhost.conf
     env_file: .env
     environment:
