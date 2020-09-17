@@ -39,6 +39,25 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     env_file: .env
+  es:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.8.1
+    container_name: "${STACK_NAME}-es"
+    domainname: "${STACK_NAME}-es"
+    hostname: "${STACK_NAME}-es"
+    environment:
+      - discovery.type=single-node
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+      - 9300:9300
+    networks:
+      - ebs-docker-network
+    env_file: .env
   #  rabbit:
   #    networks:
   #      - ebs-docker-network
