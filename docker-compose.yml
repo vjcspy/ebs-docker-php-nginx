@@ -12,14 +12,15 @@ services:
     networks:
       - ebs-docker-network
     volumes:
+      - ./src/pub:/app/pub
       - /home/vm/work/ggg/bom:/app/yt
+      - /home/vm/work/k/mgt240:/app/mgt240
       - ./config/nginx/vhost.conf:/opt/docker/etc/nginx/vhost.conf
     env_file: .env
     environment:
-      PHP_IDE_CONFIG: "serverName=web" #debug cli
+      PHP_IDE_CONFIG: "serverName=mgt" #debug cli
       XDEBUG_REMOTE_AUTOSTART: 0
       XDEBUG_REMOTE_HOST: "host.vm" #linux
-  #      XDEBUG_REMOTE_HOST: "docker.for.mac.localhost" #mac
   mysql:
     image: mysql:5.7
     container_name: "${STACK_NAME}-db"
