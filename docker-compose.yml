@@ -88,4 +88,6 @@ services:
 networks:
   ebs-docker-network:
 
-
+volumes:
+  elasticsearch-data:
+    driver: local
