@@ -12,10 +12,9 @@ services:
     networks:
       - ebs-docker-network
     volumes:
-      - ./src/pub:/app/pub
-      - /home/vm/work/ggg/bom:/app/yt
-      - /home/vm/work/k/mgt240:/app/mgt240
-      - ./config/nginx/vhost.conf:/opt/docker/etc/nginx/vhost.conf
+      - ./src/pub:/app/pub:delegated
+      - /Users/dinhkhoi/work/ggg/yutang/bom:/app/yt:delegated
+      - ./config/nginx/vhost.conf:/opt/docker/etc/nginx/vhost.conf:delegated
     env_file: .env
     environment:
       PHP_IDE_CONFIG: "serverName=mgt" #debug cli
@@ -31,8 +30,8 @@ services:
     networks:
       - ebs-docker-network
     volumes:
-      - ./docker_data/mysql:/var/lib/mysql
-      - ./docker_data/logs/mysql:/var/log/mysql
+      - ./docker_data/mysql:/var/lib/mysql:delegated
+      - ./docker_data/logs/mysql:/var/log/mysql:delegated
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
@@ -90,4 +89,6 @@ networks:
 
 volumes:
   elasticsearch-data:
+    driver: local
+  mysql-data:
     driver: local
