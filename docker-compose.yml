@@ -12,9 +12,7 @@ services:
     networks:
       - ebs-docker-network
     volumes:
-      - /home/vjcspy/work/ggg/bom:/app/yt
-      - /home/vjcspy/work/wp_yt/yutang/public_html:/app/yt_wp
-      - /home/vjcspy/work/vinagiay/src/vng_current:/app/vng_current
+      - ./src/coedo/porto2_3.1.8:/app/porto2
       - ./config/nginx/vhost.conf:/opt/docker/etc/nginx/vhost.conf
     env_file: .env
     environment:
