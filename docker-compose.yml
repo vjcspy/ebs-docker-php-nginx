@@ -13,7 +13,6 @@ services:
       - ebs-docker-network
     volumes:
       - ./src/bom:/app/bom
-      - ./src/coedo/porto2_3.1.8:/app/porto2
       - ./config/nginx/vhost.conf:/opt/docker/etc/nginx/vhost.conf:delegated
     env_file: .env
     environment:
