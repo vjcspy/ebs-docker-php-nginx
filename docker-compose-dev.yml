@@ -1,9 +1,0 @@
-version: "3.5"
-services:
-  webserver:
-    volumes:
-      - bom-osx-sync:/app/bom:nocopy # nocopy is important
-
-volumes:
-  bom-osx-sync:
-    external: true
