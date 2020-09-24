@@ -12,14 +12,12 @@ services:
     networks:
       - ebs-docker-network
     volumes:
-      - ./src/pub:/app/pub:delegated
-      - /Users/dinhkhoi/work/ggg/yutang/bom:/app/yt:delegated
       - ./config/nginx/vhost.conf:/opt/docker/etc/nginx/vhost.conf:delegated
     env_file: .env
     environment:
       PHP_IDE_CONFIG: "serverName=mgt" #debug cli
-      XDEBUG_REMOTE_AUTOSTART: 0
-      XDEBUG_REMOTE_HOST: "host.vm" #linux
+      XDEBUG_REMOTE_AUTOSTART: "1"
+      XDEBUG_REMOTE_HOST: "host.docker.internal" #linux
   mysql:
     image: mysql:5.7
     container_name: "${STACK_NAME}-db"
@@ -30,7 +28,7 @@ services:
     networks:
       - ebs-docker-network
     volumes:
-      - ./docker_data/mysql:/var/lib/mysql:delegated
+      - mysql-data:/var/lib/mysql
       - ./docker_data/logs/mysql:/var/log/mysql:delegated
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
@@ -38,25 +36,25 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     env_file: .env
-  es:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.8.1
-    container_name: "${STACK_NAME}-es"
-    domainname: "${STACK_NAME}-es"
-    hostname: "${STACK_NAME}-es"
-    environment:
-      - discovery.type=single-node
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    volumes:
-      - elasticsearch-data:/usr/share/elasticsearch/data
-    ports:
-      - 9200:9200
-      - 9300:9300
-    networks:
-      - ebs-docker-network
-    env_file: .env
+  # es:
+  #   image: docker.elastic.co/elasticsearch/elasticsearch:7.8.1
+  #   container_name: "${STACK_NAME}-es"
+  #   domainname: "${STACK_NAME}-es"
+  #   hostname: "${STACK_NAME}-es"
+  #   environment:
+  #     - discovery.type=single-node
+  #   ulimits:
+  #     memlock:
+  #       soft: -1
+  #       hard: -1
+  #   volumes:
+  #     - elasticsearch-data:/usr/share/elasticsearch/data
+  #   ports:
+  #     - 9200:9200
+  #     - 9300:9300
+  #   networks:
+  #     - ebs-docker-network
+  #   env_file: .env
   #  rabbit:
   #    networks:
   #      - ebs-docker-network
