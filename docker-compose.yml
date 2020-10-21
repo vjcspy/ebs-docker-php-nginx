@@ -3,36 +3,33 @@ version: "3.5"
 services:
   webserver:
     image: vjcspy/ebs-docker-php-nginx:7.3
-    container_name: "${STACK_NAME}-web"
-    domainname: "${STACK_NAME}-web"
-    hostname: "${STACK_NAME}-web"
+    container_name: "eticket-web"
+    domainname: "eticket-web"
+    hostname: "eticket-web"
     ports:
       - "80:80"
       - "443:443"
     networks:
       - ebs-docker-network
     volumes:
-      - ./src/bom:/app/bom
-      - ./src/yt-pcms:/app/yt-pcms
-      - ./src/ee_240/mgt240:/app/mgt240
-      - ./src/mgt_ee_241/root:/app/mgt241
+      - ./src/e-ticket:/app/e-ticket
       - ./config/nginx/vhost.conf:/opt/docker/etc/nginx/vhost.conf
     env_file: .env
     environment:
-      PHP_IDE_CONFIG: "serverName=mgt" #debug cli
+      PHP_IDE_CONFIG: "serverName=eticket" #debug cli
       XDEBUG_REMOTE_AUTOSTART: "1"
       XDEBUG_REMOTE_HOST: "host.docker.internal" #linux
   mysql:
     image: mysql:5.7
-    container_name: "${STACK_NAME}-db"
-    domainname: "${STACK_NAME}-db"
-    hostname: "${STACK_NAME}-db"
+    container_name: "eticket-db"
+    domainname: "eticket-db"
+    hostname: "eticket-db"
     ports:
       - "3306:3306"
     networks:
       - ebs-docker-network
     volumes:
-      - mysql-data:/var/lib/mysql
+      - mysql-data-eticket:/var/lib/mysql
       - ./docker_data/logs/mysql:/var/log/mysql:delegated
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
@@ -40,25 +37,25 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     env_file: .env
-  es:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.8.1
-    container_name: "${STACK_NAME}-es"
-    domainname: "${STACK_NAME}-es"
-    hostname: "${STACK_NAME}-es"
-    environment:
-      - discovery.type=single-node
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    volumes:
-      - elasticsearch-data:/usr/share/elasticsearch/data
-    ports:
-      - 9200:9200
-      - 9300:9300
-    networks:
-      - ebs-docker-network
-    env_file: .env
+  # es:
+  #   image: docker.elastic.co/elasticsearch/elasticsearch:7.8.1
+  #   container_name: "${STACK_NAME}-es"
+  #   domainname: "${STACK_NAME}-es"
+  #   hostname: "${STACK_NAME}-es"
+  #   environment:
+  #     - discovery.type=single-node
+  #   ulimits:
+  #     memlock:
+  #       soft: -1
+  #       hard: -1
+  #   volumes:
+  #     - elasticsearch-data:/usr/share/elasticsearch/data
+  #   ports:
+  #     - 9200:9200
+  #     - 9300:9300
+  #   networks:
+  #     - ebs-docker-network
+  #   env_file: .env
   #  rabbit:
   #    networks:
   #      - ebs-docker-network
@@ -90,7 +87,5 @@ networks:
   ebs-docker-network:
 
 volumes:
-  elasticsearch-data:
-    driver: local
-  mysql-data:
+  mysql-data-eticket:
     driver: local
