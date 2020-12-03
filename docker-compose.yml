@@ -12,7 +12,7 @@ services:
     networks:
       - ebs-docker-network
     volumes:
-      - ./src/e-ticket:/app/e-ticket
+      - ./src/gticket:/app/e-ticket
       - ./config/nginx/vhost.conf:/opt/docker/etc/nginx/vhost.conf
     env_file: .env
     environment:
