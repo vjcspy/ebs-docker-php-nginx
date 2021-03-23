@@ -17,6 +17,7 @@ services:
       - ./src/ee_240/mgt240:/app/mgt240
       - ./src/mgt_ee_241/root:/app/mgt241
       - ./config/nginx/vhost.conf:/opt/docker/etc/nginx/vhost.conf
+      - ./config/nginx/mgt.conf:/opt/docker/etc/nginx/vhost.d/mgt.conf
     env_file: .env
     environment:
       PHP_IDE_CONFIG: "serverName=mgt" #debug cli
