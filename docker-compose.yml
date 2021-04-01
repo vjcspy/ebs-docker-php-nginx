@@ -13,6 +13,7 @@ services:
       - ebs-docker-network
     volumes:
       - ./src/coedo/porto2_3.1.8:/app/porto2
+      - ./src/magento-2.3.2/magento-2.3.2:/app/mgtpos
       - ./config/nginx/vhost.conf:/opt/docker/etc/nginx/vhost.conf
     env_file: .env
     environment:
