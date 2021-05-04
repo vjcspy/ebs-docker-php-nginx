@@ -12,13 +12,14 @@ services:
     networks:
       - ebs-docker-network
     volumes:
-      - ./src/bom:/app/bom
-      - ./src/yt-pcms:/app/yt-pcms
-      - ./src/ee_240/mgt240:/app/mgt240
-      - ./src/mgt_ee_241/root:/app/mgt241
-      - /home/vm/work/env/dockers/src/mgt242/project-enterprise-edition:/app/pdm
+      - ./src/yt-pcms:/yt-pcms
+#      - /home/vm/work/env/dockers/src/mgt242/blank/mgt242/profile:/var/log/xdebug/profile
+      - /home/vm/work/env/dockers/src/mgt242/pdm:/pdm
+      - /home/vm/work/env/dockers/src/mgt242/pcms:/pcms
+      - /home/vm/work/env/dockers/src/mgt242/blank/mgt242:/blank242
       - ./config/nginx/vhost.conf:/opt/docker/etc/nginx/vhost.conf
       - ./config/nginx/mgt.conf:/opt/docker/etc/nginx/vhost.d/mgt.conf
+#      - ./config/php/php.ini:/opt/docker/etc/php/php.ini
     env_file: .env
     environment:
       PHP_IDE_CONFIG: "serverName=mgt" #debug cli
