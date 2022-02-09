@@ -82,3 +82,6 @@ RUN chmod 755 /usr/local/bin/setup-mgt.sh
 RUN chmod 755 /usr/local/bin/debug.sh
 RUN chmod 755 /usr/local/bin/xon
 RUN chmod 755 /usr/local/bin/xoff
+
+## -----------------------------Back to safe user-----------------------
+USER application:application
