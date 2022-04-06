@@ -12,7 +12,7 @@ services:
     networks:
       - ebs-docker-network
     volumes:
-      - ./src/ggg_mkt:/ggg_mkt
+      - /home/vm/work/src:/src
       - ./config/nginx/vhost.conf:/opt/docker/etc/nginx/vhost.conf
       - ./config/nginx/mgt.conf:/opt/docker/etc/nginx/vhost.d/mgt.conf
     env_file: .env
@@ -21,7 +21,7 @@ services:
       XDEBUG_REMOTE_AUTOSTART: "1"
       XDEBUG_REMOTE_HOST: "host.docker.internal" #linux
   mysql:
-    image: mysql:5.7
+    image: mysql:latest
     container_name: "${STACK_NAME}-db"
     domainname: "${STACK_NAME}-db"
     hostname: "${STACK_NAME}-db"
@@ -40,7 +40,7 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     env_file: .env
   es:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.8.1
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.16.3
     container_name: "${STACK_NAME}-es"
     domainname: "${STACK_NAME}-es"
     hostname: "${STACK_NAME}-es"
@@ -51,7 +51,7 @@ services:
         soft: -1
         hard: -1
     volumes:
-      - elasticsearch-data:/usr/share/elasticsearch/data
+      - elasticsearch-data1:/usr/share/elasticsearch/data
     ports:
       - 9200:9200
       - 9300:9300
@@ -89,7 +89,7 @@ networks:
   ebs-docker-network:
 
 volumes:
-  elasticsearch-data:
+  elasticsearch-data1:
     driver: local
   mysql-data:
     driver: local
