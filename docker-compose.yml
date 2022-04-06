@@ -2,7 +2,7 @@ version: "3.5"
 
 services:
   webserver:
-    image: vjcspy/ebs-docker-php-nginx:7.3
+    image: vjcspy/ebs-docker-php-nginx:7.4
     container_name: "${STACK_NAME}-web"
     domainname: "${STACK_NAME}-web"
     hostname: "${STACK_NAME}-web"
@@ -12,14 +12,9 @@ services:
     networks:
       - ebs-docker-network
     volumes:
-      - ./src/yt-pcms:/yt-pcms
-#      - /home/vm/work/env/dockers/src/mgt242/blank/mgt242/profile:/var/log/xdebug/profile
-      - /home/vm/work/env/dockers/src/mgt242/pdm:/pdm
-      - /home/vm/work/env/dockers/src/mgt242/pcms:/pcms
-      - /home/vm/work/env/dockers/src/mgt242/blank/mgt242:/blank242
+      - ./src/ggg_mkt:/ggg_mkt
       - ./config/nginx/vhost.conf:/opt/docker/etc/nginx/vhost.conf
       - ./config/nginx/mgt.conf:/opt/docker/etc/nginx/vhost.d/mgt.conf
-#      - ./config/php/php.ini:/opt/docker/etc/php/php.ini
     env_file: .env
     environment:
       PHP_IDE_CONFIG: "serverName=mgt" #debug cli
@@ -36,6 +31,7 @@ services:
       - ebs-docker-network
     volumes:
       - mysql-data:/var/lib/mysql
+      - ./dump:/dump
       - ./docker_data/logs/mysql:/var/log/mysql:delegated
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
