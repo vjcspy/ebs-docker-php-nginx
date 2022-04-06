@@ -1,4 +1,4 @@
-# php-nginx:7.*
+# php-nginx:8.1
 
 Fully compatible with magento 2.*
 
