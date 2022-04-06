@@ -2,5 +2,5 @@
 
 # m h dom mon dow command
 #* * * * * echo "Hello world" >> /var/log/cron.log 2>&1
-* * * * * php /app/bin/magento cron:run 2>&1 | grep -v "Ran jobs by schedule" >> /app/var/log/magento.cron.log
+#* * * * * php /app/bin/magento cron:run 2>&1 | grep -v "Ran jobs by schedule" >> /app/var/log/magento.cron.log
 # An empty line is required at the end of this file for a valid cron file.
