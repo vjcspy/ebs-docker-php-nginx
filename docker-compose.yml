@@ -46,12 +46,13 @@ services:
     hostname: "${STACK_NAME}-es"
     environment:
       - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms750m -Xmx750m"
     ulimits:
       memlock:
         soft: -1
         hard: -1
     volumes:
-      - elasticsearch-data1:/usr/share/elasticsearch/data
+      - elast_data:/usr/share/elasticsearch/data
     ports:
       - 9200:9200
       - 9300:9300
@@ -89,7 +90,6 @@ networks:
   ebs-docker-network:
 
 volumes:
-  elasticsearch-data1:
-    driver: local
+  elast_data:
   mysql-data:
     driver: local
