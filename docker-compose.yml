@@ -12,9 +12,10 @@ services:
     networks:
       - ebs-docker-network
     volumes:
-      - /home/vm/work/src:/src
+      - src:/src
       - ./config/nginx/vhost.conf:/opt/docker/etc/nginx/vhost.conf
       - ./config/nginx/mgt.conf:/opt/docker/etc/nginx/vhost.d/mgt.conf
+      - ./config/ssl:/opt/docker/etc/nginx/ssl
     env_file: .env
     environment:
       PHP_IDE_CONFIG: "serverName=mgt" #debug cli
@@ -91,5 +92,22 @@ networks:
 
 volumes:
   elast_data:
+  src:
   mysql-data:
     driver: local
+
+x-mutagen:
+  sync:
+    defaults:
+      ignore:
+        vcs: true
+    code:
+      alpha: "/Users/dinhkhoi/work/src"
+      beta: "volume://src"
+      mode: "two-way-resolved"
+      ignore:
+        vcs: true
+        paths:
+          - "/.idea/"
+          - "/.git/"
+          - "/node_mudules/"
