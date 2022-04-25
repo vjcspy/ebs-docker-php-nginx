@@ -1,4 +1,4 @@
-version: "3.5"
+version: "3.7"
 
 services:
   webserver:
@@ -99,15 +99,17 @@ volumes:
 x-mutagen:
   sync:
     defaults:
-      ignore:
+     ignore:
         vcs: true
     code:
-      alpha: "/Users/dinhkhoi/work/src"
+      alpha: "/Users/khoidinh/work/docker/src"
       beta: "volume://src"
       mode: "two-way-resolved"
       ignore:
         vcs: true
         paths:
-          - "/.idea/"
-          - "/.git/"
-          - "/node_mudules/"
+          - ".idea/"
+          - ".git/"
+          - "vendor/"
+          - "pub/"
+          - "var/"
