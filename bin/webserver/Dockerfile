@@ -54,8 +54,6 @@ RUN chmod 755 /opt/docker/bin/service.d/get-container-ip.sh
 ADD ./service.d/get-container-ip.conf /opt/docker/etc/supervisor.d/get-container-ip.conf
 RUN chmod 644 /opt/docker/etc/supervisor.d/get-container-ip.conf
 
-##
-
 ## -----------------------------default application-----------------------------
 COPY ./html /app
 
@@ -64,14 +62,9 @@ COPY ./php/php.ini /opt/docker/etc/php/php.ini
 
 ## add more php-fpm config
 COPY ./nginx/conf.d /opt/docker/etc/nginx/conf.d
-## add ssl pem by using mkcert
-COPY ./nginx/ssl /opt/docker/etc/nginx/ssl
-## add custom site config
-COPY ./nginx/vhost.d /opt/docker/etc/nginx/vhost.d
+
 ## vhost config for nginx
-COPY ./nginx/vhost.conf /opt/docker/etc/nginx/vhost.conf
 RUN chmod 644 /opt/docker/etc/nginx/conf.d/11-php.conf
-RUN chmod 644 /opt/docker/etc/nginx/vhost.conf
 
 ## -----------------------------ADD helper-----------------------------
 ADD ./bin/setup-mgt.sh /usr/local/bin/setup-mgt.sh

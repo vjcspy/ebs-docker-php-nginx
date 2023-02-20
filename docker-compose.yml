@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   webserver:
-    image: vjcspy/ebs-docker-php-nginx:8.1
+    build: ./bin/webserver
     container_name: "${STACK_NAME}-web"
     domainname: "${STACK_NAME}-web"
     hostname: "${STACK_NAME}-web"
@@ -12,17 +12,19 @@ services:
     networks:
       - ebs-docker-network
     volumes:
-      - src:/src
+      - /home/wsl/work/k/mgt/mgt24:/mgt24
       - ./config/nginx/vhost.conf:/opt/docker/etc/nginx/vhost.conf
-      - ./config/nginx/mgt.conf:/opt/docker/etc/nginx/vhost.d/mgt.conf
+      - ./config/nginx/mgt/mgt.conf:/opt/docker/etc/nginx/mgt/mgt.conf
       - ./config/ssl:/opt/docker/etc/nginx/ssl
     env_file: .env
     environment:
       PHP_IDE_CONFIG: "serverName=mgt" #debug cli
       XDEBUG_REMOTE_AUTOSTART: "1"
       XDEBUG_REMOTE_HOST: "host.docker.internal" #linux
+      COMPOSER_VERSION: "2"
+
   mysql:
-    image: mysql:latest
+    image: mysql:8
     container_name: "${STACK_NAME}-db"
     domainname: "${STACK_NAME}-db"
     hostname: "${STACK_NAME}-db"
@@ -40,8 +42,9 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     env_file: .env
+
   es:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.16.3
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.9
     container_name: "${STACK_NAME}-es"
     domainname: "${STACK_NAME}-es"
     hostname: "${STACK_NAME}-es"
@@ -54,27 +57,30 @@ services:
         hard: -1
     volumes:
       - elast_data:/usr/share/elasticsearch/data
-    ports:
-      - 9200:9200
-      - 9300:9300
+    #    ports:
+    #      - 9200:9200
+    #      - 9300:9300
     networks:
       - ebs-docker-network
     env_file: .env
-  #  rabbit:
-  #    networks:
-  #      - ebs-docker-network
-  #    hostname: "${STACK_NAME}-rb"
-  #    container_name: "${STACK_NAME}-rb"
-  #    domainname: "${STACK_NAME}-rb"
-  #    image: "rabbitmq:3-management"
-  #    ports:
-  #      - "15672:15672"
-  #      - "5672:5672"
-  #    environment:
-  #      RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
-  #      RABBITMQ_DEFAULT_USER: "rabbitmq"
-  #      RABBITMQ_DEFAULT_PASS: "rabbitmq"
-  #      RABBITMQ_DEFAULT_VHOST: "/"
+
+  rabbit:
+    image: "rabbitmq:3.9-management"
+    networks:
+      - ebs-docker-network
+    hostname: "${STACK_NAME}-rb"
+    container_name: "${STACK_NAME}-rb"
+    domainname: "${STACK_NAME}-rb"
+#    ports:
+#      - "15672:15672"
+#      - "5672:5672"
+    environment:
+      RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
+      RABBITMQ_DEFAULT_USER: "rabbitmq"
+      RABBITMQ_DEFAULT_PASS: "rabbitmq"
+      RABBITMQ_DEFAULT_VHOST: "/"
+    env_file: .env
+
 #    redis:
 #        container_name: "${STACK_NAME}-rds"
 #        domainname: "${STACK_NAME}-rds"
@@ -87,29 +93,11 @@ services:
 #        networks:
 #            - ebs-docker-network
 #        env_file: .env
+
 networks:
   ebs-docker-network:
 
 volumes:
   elast_data:
-  src:
   mysql-data:
     driver: local
-
-x-mutagen:
-  sync:
-    defaults:
-     ignore:
-        vcs: true
-    code:
-      alpha: "/Users/khoidinh/work/docker/src"
-      beta: "volume://src"
-      mode: "two-way-resolved"
-      ignore:
-        vcs: true
-        paths:
-          - ".idea/"
-          - ".git/"
-          - "vendor/"
-          - "pub/"
-          - "var/"

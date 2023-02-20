@@ -5,3 +5,5 @@
 /www/**
 .DS_Store
 /src
+/dump
+/logs
