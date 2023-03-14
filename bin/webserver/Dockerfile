@@ -1,4 +1,4 @@
-FROM webdevops/php-nginx-dev:7.3
+FROM webdevops/php-nginx:8.1
 
 RUN apt-get update
 RUN apt-get -y upgrade
@@ -26,7 +26,6 @@ RUN apt-get -y upgrade
 RUN apt-get -y install htop
 RUN apt-get -y install net-tools
 RUN apt-get -y install iproute2
-RUN apt-get -y install iputils-ping
 
 ## -----------------------------Install builtin cron-----------------------------
 RUN docker-service-enable cron
