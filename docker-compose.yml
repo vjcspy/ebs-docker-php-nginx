@@ -3,6 +3,7 @@ version: "3.5"
 services:
   webserver:
     image: vjcspy/ebs-docker-php-nginx:8.1-prod
+    restart: always
     container_name: "${STACK_NAME}-web"
     domainname: "${STACK_NAME}-web"
     hostname: "${STACK_NAME}-web"
@@ -17,6 +18,7 @@ services:
     env_file: .env
   mysql:
     image: mysql:5.7
+    restart: always
     container_name: "${STACK_NAME}-db"
     domainname: "${STACK_NAME}-db"
     hostname: "${STACK_NAME}-db"
@@ -36,6 +38,7 @@ services:
 
   es:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.17.9
+    restart: always
     container_name: "${STACK_NAME}-es"
     domainname: "${STACK_NAME}-es"
     hostname: "${STACK_NAME}-es"
@@ -57,6 +60,7 @@ services:
 
   rabbit:
     image: "rabbitmq:3.9-management"
+    restart: always
     networks:
       - ebs-docker-network
     hostname: "${STACK_NAME}-rb"
@@ -76,6 +80,7 @@ services:
 
   redis:
     container_name: "${STACK_NAME}-redis"
+    restart: always
     domainname: "${STACK_NAME}-redis"
     hostname: "${STACK_NAME}-redis"
     image: redis:latest
