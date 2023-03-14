@@ -81,18 +81,18 @@ services:
       RABBITMQ_DEFAULT_VHOST: "/"
     env_file: .env
 
-#    redis:
-#        container_name: "${STACK_NAME}-rds"
-#        domainname: "${STACK_NAME}-rds"
-#        hostname: "${STACK_NAME}-rds"
-#        image: redis:latest
-#        # command: redis-server --appendonly yes --requirepass root
-#        command: ["redis-server", "--appendonly", "yes"]
-#        ports:
-#            - "6379:6379"
-#        networks:
-#            - ebs-docker-network
-#        env_file: .env
+  redis:
+    container_name: "${STACK_NAME}-redis"
+    domainname: "${STACK_NAME}-redis"
+    hostname: "${STACK_NAME}-redis"
+    image: redis:latest
+    # command: redis-server --appendonly yes --requirepass root
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "6379:6379"
+    networks:
+      - ebs-docker-network
+    env_file: .env
 
 networks:
   ebs-docker-network:
