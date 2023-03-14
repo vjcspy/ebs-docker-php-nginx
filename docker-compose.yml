@@ -25,8 +25,8 @@ services:
     networks:
       - ebs-docker-network
     volumes:
-      - ./docker_data/mysql:/var/lib/mysql
-      - ./docker_data/logs/mysql:/var/log/mysql
+      - mysql_data:/var/lib/mysql
+      - mysql_log:/var/log/mysql
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
@@ -65,6 +65,8 @@ services:
     #    ports:
     #      - "15672:15672"
     #      - "5672:5672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq/mnesia/
     environment:
       RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
       RABBITMQ_DEFAULT_USER: "rabbitmq"
@@ -77,6 +79,8 @@ services:
     domainname: "${STACK_NAME}-redis"
     hostname: "${STACK_NAME}-redis"
     image: redis:latest
+    volumes:
+      - redis_data:/data
     # command: redis-server --appendonly yes --requirepass root
     command: [ "redis-server", "--appendonly", "yes" ]
     ports:
@@ -84,6 +88,13 @@ services:
     networks:
       - ebs-docker-network
     env_file: .env
+
+volumes:
+  mysql_data:
+  mysql_log:
+  redis_data:
+  rabbitmq_data:
+  elast_data:
 
 networks:
   ebs-docker-network:
