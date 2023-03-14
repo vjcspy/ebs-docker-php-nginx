@@ -2,7 +2,7 @@ version: "3.5"
 
 services:
   webserver:
-    image: vjcspy/ebs-docker-php-nginx:7.3-prod
+    image: vjcspy/ebs-docker-php-nginx:8.1-prod
     container_name: "${STACK_NAME}-web"
     domainname: "${STACK_NAME}-web"
     hostname: "${STACK_NAME}-web"
@@ -33,5 +33,57 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     env_file: .env
+
+  es:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.9
+    container_name: "${STACK_NAME}-es"
+    domainname: "${STACK_NAME}-es"
+    hostname: "${STACK_NAME}-es"
+    environment:
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms750m -Xmx750m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - elast_data:/usr/share/elasticsearch/data
+    #    ports:
+    #      - 9200:9200
+    #      - 9300:9300
+    networks:
+      - ebs-docker-network
+    env_file: .env
+
+  rabbit:
+    image: "rabbitmq:3.9-management"
+    networks:
+      - ebs-docker-network
+    hostname: "${STACK_NAME}-rb"
+    container_name: "${STACK_NAME}-rb"
+    domainname: "${STACK_NAME}-rb"
+    #    ports:
+    #      - "15672:15672"
+    #      - "5672:5672"
+    environment:
+      RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
+      RABBITMQ_DEFAULT_USER: "rabbitmq"
+      RABBITMQ_DEFAULT_PASS: "rabbitmq"
+      RABBITMQ_DEFAULT_VHOST: "/"
+    env_file: .env
+
+  redis:
+    container_name: "${STACK_NAME}-redis"
+    domainname: "${STACK_NAME}-redis"
+    hostname: "${STACK_NAME}-redis"
+    image: redis:latest
+    # command: redis-server --appendonly yes --requirepass root
+    command: [ "redis-server", "--appendonly", "yes" ]
+    ports:
+      - "6379:6379"
+    networks:
+      - ebs-docker-network
+    env_file: .env
+
 networks:
   ebs-docker-network:
