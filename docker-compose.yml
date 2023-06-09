@@ -12,10 +12,12 @@ services:
     networks:
       - ebs-docker-network
     volumes:
-      - /home/wsl/work/k/mgt/mgt24:/mgt24
+      - /home/wsl/work/pim/be:/pim
+      - /home/wsl/work/magento/mgt242_default:/mgt242_default
       - ./config/nginx/vhost.conf:/opt/docker/etc/nginx/vhost.conf
       - ./config/nginx/mgt/mgt.conf:/opt/docker/etc/nginx/mgt/mgt.conf
       - ./config/ssl:/opt/docker/etc/nginx/ssl
+      - ./config/php/php.ini:/opt/docker/etc/php/php.ini
     env_file: .env
     environment:
       PHP_IDE_CONFIG: "serverName=mgt" #debug cli
@@ -35,7 +37,7 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
       - ./dump:/dump
-      - ./docker_data/logs/mysql:/var/log/mysql:delegated
+      - ./docker_data/logs/mysql:/var/log/mysql
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
