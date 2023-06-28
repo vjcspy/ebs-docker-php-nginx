@@ -9,10 +9,10 @@ services:
     ports:
       - "80:80"
       - "443:443"
-    networks:
+    networks: 
       - ebs-docker-network
     volumes:
-      - ./src/ggg_mkt:/ggg_mkt
+      - /home/dinhkhoi/work/pim/be:/pim
       - ./config/nginx/vhost.conf:/opt/docker/etc/nginx/vhost.conf
       - ./config/nginx/mgt.conf:/opt/docker/etc/nginx/vhost.d/mgt.conf
     env_file: .env
@@ -21,7 +21,7 @@ services:
       XDEBUG_REMOTE_AUTOSTART: "1"
       XDEBUG_REMOTE_HOST: "host.docker.internal" #linux
   mysql:
-    image: mysql:5.7
+    image: mysql:8
     container_name: "${STACK_NAME}-db"
     domainname: "${STACK_NAME}-db"
     hostname: "${STACK_NAME}-db"
